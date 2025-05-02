@@ -1,0 +1,20 @@
+1. Suponga que N personas llegan a la cola de un banco. Para atender a las personas existen 2
+empleados que van atendiendo de a una y por orden de llegada a las personas
+
+chan llegada(int,texto);
+chan respuestas[N](texto);
+process persona[id:1..N]{
+        texto t;
+        send llegada(id,t);
+        //espera a ser atendido
+        receive llegada[id](texto);
+}
+process empleado[i:1..2]{
+        texto t,r;
+        int id;
+        while(true){
+                receive llegada(id,t);
+                r=generarRespuesta(t);
+                send respuestas[id](r);
+        }
+}

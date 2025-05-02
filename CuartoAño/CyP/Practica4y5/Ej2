@@ -1,0 +1,22 @@
+2. Se desea modelar el funcionamiento de un banco en el cual existen 5 cajas para realizar
+pagos. Existen P personas que desean pagar. Para esto cada una selecciona la caja donde
+hay menos personas esperando, una vez seleccionada espera a ser atendido.
+NOTA: maximizando la concurrencia.
+
+chan cant_esperando_respuesta[5](int);
+chan cant_esperando_pregunta[5](int);
+chan atencion[5](texto);
+chan respuesta[P](texto);
+process persona[id:1..P]{}
+    int vector[5];
+    texto t;
+    for(int i=0;i<5;i++){
+        send cant_esperando_pregunta[i](id);}
+    for(int i=0;i<5;i++){
+        receive cant_esperando_respuesta[i](vector[i]);}    
+    send atencion[determinarmenor(vector)](id,t);
+    receive respuesta[id](t);
+    }
+process caja[id:1..5]{
+
+}
