@@ -3,20 +3,39 @@ pagos. Existen P personas que desean pagar. Para esto cada una selecciona la caj
 hay menos personas esperando, una vez seleccionada espera a ser atendido.
 NOTA: maximizando la concurrencia.
 
-chan cant_esperando_respuesta[5](int);
+chan avisar_que_me_encole[5](int);
+chan cant_esperando_respuesta[P](int);
 chan cant_esperando_pregunta[5](int);
 chan atencion[5](texto);
 chan respuesta[P](texto);
-process persona[id:1..P]{}
+
+process persona[id:1..P]{
     int vector[5];
     texto t;
     for(int i=0;i<5;i++){
         send cant_esperando_pregunta[i](id);}
     for(int i=0;i<5;i++){
-        receive cant_esperando_respuesta[i](vector[i]);}    
-    send atencion[determinarmenor(vector)](id,t);
+        receive cant_esperando_respuesta[i](vector[i]);} 
+    int pos= determinarmenor(vector); 
+    send avisar_que_me_encole[pos](1);  
+    send atencion[pos](id,t);
     receive respuesta[id](t);
     }
 process caja[id:1..5]{
-
+    int cant_esperando=0;
+    int i;
+    while(true){
+            receive consulta(i,tipo);
+            if (tipo == "cant_Esperando"){
+                 send cant_esperando_respuesta[id](cant_esperando);       
+            }
+            else if (tipo == "encolarse"){
+                    cant_esperando++;
+                    receive atencion[id](persona,t);
+                    //resuelve el pedido
+                    texto r= resolverPedido(t);
+                    send respuesta[persona](r);
+            }
+    
+    }       
 }
