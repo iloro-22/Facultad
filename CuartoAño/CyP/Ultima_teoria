@@ -1,0 +1,25 @@
+La difrerencia de RPC (remote process call) Y RENDEZVOUS  que ahora los canales son bidireccionales 
+En RPC se crea un nuevo proceso para atender cada llamado a un procedure creo 
+En RENDEZVOUS esperas que se te atienda el pedido y devuelvan los resultados, creo que es como antes pero con canal bidireccional
+El lenguaje ADA utiliza RENDEZVOUS
+RPC --> Los programas se descomponen en modulos (con procesos y procedures) que pueden estar en espacios de direcciones distintos. 
+--> Si esta en el mismo modulo no se crea otro proceso. Pueden trabajar (cada modulo) con exclusion mutua(tipo monitores) o concurrentemente
+
+RENDEZVOUS (encuentro) -->  Es el que utilizamos en la practica!!!Al hacer un call el proceso se queda demorado ahi hasta que le den los resultados.
+--> Si no hay pedido pendiente se queda demorado en la sentencia de entrada hasta que alla alguna.
+--> Se ordenan de menor a mayor segun la especificacion de e sub n.
+--> B sub n y e sub n son opcionales.
+    ADA --> TASK define una unica tarea. Una instancia de TASK BODY se crea en el bloque correspondiente en el cual se declara el TASK.
+        --> Los ENTRYS pueden ser de in, out o in out, va esto y despues el tipo de dato
+        --> El programa principal tambien puede hacer ENTRY CALLS pero no puede exportar?
+        --> ENTRY CALL CONDICIONAL = En el select intenta hacer el llamado, pasa y ejecuta las sentencias dependiendo si te aceptaron o no el pedido 
+        --> ENTRY CALL TEMPORAL = En el select intenta hacer el llamado, si no se lo atendieron el pedido espera a lo sumo el tiempo 
+                                  del or de que se lo acepten al pedido y haces lo que dice abajo si no se lo aceptaron
+        --> Ahora es la explicacion de los que aceptan los pedidos
+            --> Todo lo que se hace dentro del accept estas demorando al que hizo el ENTRY CALL, tratar de que sea lo minimo posible
+            --> Puede no tener cuerpo el accept y lo mas normal es que no tenga parametros.Sirve para avisar que termino un proceso
+                Es imporante marcar que no tiene cuerpo el accept para el parcial
+            --> Te quedas parado hasta que haya un pedido de ese accept
+            --> Un accept resuelve un solo pedido
+            --> Solo variables locales en condicion booleana B
+            --> Lo que va en sentencias luego del accept en la sentencia WAIT SELECTIVA se hace fuera del accept 
