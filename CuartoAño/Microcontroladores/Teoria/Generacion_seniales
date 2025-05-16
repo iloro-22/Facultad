@@ -1,0 +1,19 @@
+Para leer o cargar valores en TIMER1 (16 bits) se debe hacer en 2 tiempos. 
+En este timer se tien un registro temporal de 8 bits intermedio donde se guarda la parte alta primero para luego en el mismo pulso
+de reloj se guarde el valor en el registro de 16 bits. En lo nuestto no nos preocupamos ya que hacemos TCNT1= valor
+tiene 3 modos = -->NORMAL(000) --> el maximo comparador es ffff
+                -->CTC 
+                -->PWM
+Hay 2 generadores de seniales en atmega328p --> PB1(0C1A) y PB2(OC1B)
+En TCCR1A configuras como queres que sean las seniales (tiene 2 bits para OC1A(7(1),6(0)) y 2 para OC1B(5(1),4(0)))
+Se pueden usar los 2 simultaneamente --> Podes generar 2 seniales distintas la mismo tiempo
+TCCR1B  aca se configura lo del prescaler
+En modo NORMAL no podes cambiar el periodo, es fijo. Solo podes cambiar la fase cambiando el valor de OCR1A
+En modo 4 CTC (sin prescaler) podes cambiar el periodo, controlando el valor de OCR1A 
+focNA = frecuencia del timer n generada
+N numero del prescaler = 1,8,32,..
+!!!!ACTIVAR EL PB1 COMO SALIDA!!!!!!!!!!!
+UL = Unsigned long --> 32 bits
+COMPONENTE SOUNDER = se escucha el sonido por la computadora en protehu
+Con cursor medis los ms y tambien los volt en el osciloscopio diigital en protehus
+GenNotas= valor de OCR1A
