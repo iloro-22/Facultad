@@ -1,0 +1,26 @@
+//minimo
+procedure minimo(var vdets:detalles; var vregs: registros; var min: registro);
+var
+    pos: integer;
+begin
+    min:=vregs[1];
+    posmin:=1;
+    for i:=2 to N do 
+        if (vregs[i].codigo < min.codigo) then
+            begin
+                min:=vregs[i];
+                posmin:=i;
+            end;
+    end;
+    Leer(vdet[posmin],vregs[posmin]);
+end;
+procedure Leer(var d: detalle; var reg: registro);
+begin
+    if (not (EOF(d))) then
+        read(d,reg);
+    else   reg.codigo=valoralto;   
+end;
+
+//hacer los reset,rewrite y close dentro del actualizar maestro, solo los assign afuera.
+//baja fisica --> nuevo archivo o reacomodar el archivo (copiar el ultimo a la posicion del que queres borrar)
+//baja logica -->el elemento a borrar se lo distingue con alguna marca
