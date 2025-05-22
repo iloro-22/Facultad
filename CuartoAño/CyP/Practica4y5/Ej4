@@ -1,0 +1,42 @@
+/*4. Simular la atención en un locutorio con 10 cabinas telefónicas, que tiene un empleado que
+se encarga de atender a los clientes. Hay N clientes que al llegar esperan hasta que el
+empleado les indica a que cabina ir, la usan y luego se dirigen al empleado para pagarle. El
+empleado atiende a los clientes en el orden en que hacen los pedidos, pero siempre dando
+prioridad a los que terminaron de usar la cabina.
+Nota: maximizar la concurrencia; suponga
+que hay una función Cobrar() llamada por el empleado que simula que el empleado le cobra
+al cliente.*/
+
+chan pedir_atencion(int);
+chan atención[N](cabina);
+chan termine(int,cabina);
+chan monto_a_pagar[N](float);
+
+
+procedure cliente[id:1..N]{
+     send pedir_atencion(id);
+     cabina c;
+     receive atención[id](c);
+     utilizarCabina(c);
+     send termine(id,c);
+     float dinero=...;
+     receive monto_a_pagar[id](plata);
+     dinero = dinero - plata;
+    }
+
+procedure admin{
+    cabina cabinas[10];
+    cabina c;
+    int id;
+    while(true){
+        if (not empty(pedir_atencion) and (not vacio(cabinas))) -->  //atendes un pedido si hay pedidos y si hay cabina libre
+            receive pedir_atencion(int id); 
+            send atención[id](cabinalibre(cabinas));
+         (not empty(termine)) -->
+            receive termine(id,c);
+            colocarcabina(cabinas,c); //la pones en la estructura de cabinas libres
+            send monto_a_pagar[id](Cobrar());
+    }
+
+
+}
