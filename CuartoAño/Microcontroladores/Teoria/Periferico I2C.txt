@@ -1,0 +1,15 @@
+I2C (inter integrated circuit) 
+	Interfaz serie sincrionica bidireccional para conectar 2 dispositivos con solo 2 cables en distancias cortas. El maestro brinda el clock. SDA: Serial data. SCL: serial clock. Se necesita resistencia de pull up porque sino se puede producir el cortocircuito (open collector). IMPORTANTE PARA LA MATERIAS SIGUIENTES == Las entradas a los dispt suelen ser de alta impedancia, por lo tanto funcionan como capacitores al menos para el modelado eléctrico (5x10-12F). Como están en paralelo se suman las capacitancias, como máximo es de 400pF, lo cual te limita la cantidad de dispositivos. Para poner un 1 primero tenes que cargar esos capacitores y para poner un 0 se conecta a tierra el maestro y se produce la corriente de descarga, suele ser chiquita. Si pongo muchos dispositivos realentizas las comunicaciones porque tarda mas en ponerse el 1. Si queres 100kHZ de frecuencia para la comunicación, calculas el periodo (10us) y ese es el periodo que tiene que tardar en cargarse y descargarse. Tener en cuenta en esto la resistencia de pull up para que no se vaya a la mierda la corriente. Ejemplo de esto en pdf.
+	Características --> multi maestro, multi slave, half duplex, direccionamiento (identificación de cada esclavo, 7 bits o 10). Arbitración y sincronización mediante la linea SDA y control de flujo por parte del receptor en la linea SCL
+	Comunicación --> primero start, luego dirección del que te queres comunicar, luego bit de read o write, el periferico responde con un acknoledge, después van los datos 8 bits, otro ack y un stop. Al ser sincronica, se establece un enlace y hasta que no mandas el stop podes mandar varios bytes seguidos(con sus correpondientes ack). lo que si si estabas escribiendo y ahora queres leer del mismo periferico tenes que reiniciar toda la comunicación. Un start se da cuando SDA baja a 0 y SCL en 1 fijo. Stop cuando SDA sube a 1 y SCL en 1 fijo. Luego el master trasmite un bit por cada pulso. 8 pulsos para los 7 bits de direcciones y uno para el RW, en el 9 puslo escucha el ACK.  Luego 8 pulsos para leer los bits y en el 9 le manda el ack(pone un 0) en SDA.
+
+
+TWIN confirma que se hizo la transmi
+Modulo RTC (DS1207)= REAL TIME CLOCK. CHIP que adentro tiene un micro que una vez que le das alimentación el tipo tiene la hora, la fecha, dia de la semana, el calendario, alarma. Se le puede poner una pila de backup por si se corta alimentación. Ademas tiene una memoria eeprom para guardar algún parámetro, QUEDA GUARDADO SI CORTAS LA ALIMENATCION. 
+
+
+SPI (SERIAL PERIPHERAL INTERFACE)= permite 1 maestro y muchos esclavos, comunicación serie full duplex sincronica. En teoría es mas rápida que la otra o esa es la idea. Hay mas líneas de comunicación y esto te hace ser mas rápido.
+
+
+	
+

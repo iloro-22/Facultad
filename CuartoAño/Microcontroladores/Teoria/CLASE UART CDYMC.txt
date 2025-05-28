@@ -1,0 +1,19 @@
+tiempo de bit = tiempo de duración de un bit
+tasa de transferencia(1/tb) = numero de bits por unidad de tiempo [bps]
+overhead = bits que se agregan al dato para hacer mas confiable una transmisión
+ancho de banda= numero total de bits de información por unidad de tiempo, sin tener en cuenta el overhead
+full-duplex= transmisión y recepción en ambos sentidos simultáneamente. requiere dos canales
+half-duplex = comunicación bidireccional pero no simultanea
+sistema sincronico = se ponen de acuerdo a que tasas de transferencia van a usar (reloj). tasas de transf mas altas pero requiere un conductor adicional para clk
+Asincronico = la tasa de transferencia se supone conocida y la trama de datos tiene un bit de comienzo y otro de fin
+RS-232 = se puede hacer de dos maneras el control de flujo: por hw, cables (RTS/CTS) para avisarle que esta transmitiendo muy rapdio por ejmplo o por SW (Xon/Xoff) para que el receptor le diga que tiene que esperar porque no esta listo para recibir
+UART (UNIVERSAL ASYNCHRONOUS RECEIVER TRANSMITER) = periferico integrado en un MCU que permite la comunicación serie asincrónica con otros dispositivos como una pc, módems u otros MCU. 115200 bps. Los 2 dispositivos tienen que tener UART (txd1 a rxd2 y rxd1 a txd2). En este caso es 8N1 --> 8 bits de datos y 1 para indicar que comenzó la transmi. debería medir en el medio de cada bit el receptor. 
+Dentro del atmega328p se llama USART ya que también podes configurarlo para que sea sincronica la comunicación, sirve para aumentar la velocidad.
+UBRR = divisor de frecuencia para controlar la tasa de transmisión que queremos
+UDR = el dato que quieras mandar va aca
+UDR receptor = va cargando el dato en serie en shift register, se chequea paridad y se carga en paralelo en UDR.
+los registros que tenemos que programar para que todo esto ande son UCSRA UCSRB Y USCRC
+
+MAXIMO ERROR TOLERABLE = 5% por lo de que el error debe ser menor que medio tiempo de bit para que la comunicación sea efectiva
+SI QUEREMOS USAR EL TRANSMISOR TENEMOS QUE PONER TXEN EN 1
+SI UDRE en 1 esta libre el registro para transmitir
